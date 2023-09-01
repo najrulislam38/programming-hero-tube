@@ -20,8 +20,8 @@ const loadData = async(categoryId) => {
     const data = await res.json();
     const newData = data.data;
     globalData = newData;
-    console.log(globalData);
-    console.log(data.data);
+    // console.log(globalData);
+    // console.log(data.data);
     displayData(newData)
 }
 
@@ -52,7 +52,7 @@ const displayData = (cardsId) => {
                 <p class="absolute right-3 bottom-3 bg-black text-white text-sm px-2 rounded-sm">${categoryCard.others?.posted_date ? Math.floor(`${categoryCard.others.posted_date}` / 3600) + "hrs " + Math.floor(`${categoryCard.others.posted_date}` % 3600 / 60 ) + "min age" : '' }</p>
             </figure>
             <div class="my-3 px-1">
-            <div class="my-2 flex justify-start gap-3">
+            <div class="my-2 flex justify-start gap-4">
                 <div class="author rounded-full w-10 h-10 flex justify-center items-center overflow-hidden">
                     <img src="${categoryCard?.authors[0]?.profile_picture}" alt="" class="w-full h-full object-fill">
                 </div>
