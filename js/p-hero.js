@@ -20,8 +20,18 @@ const loadData = async(id) => {
     const newData = data.data
     console.log(data.data);
     const cardContainerElement = document.getElementById('card-container');
+    cardContainerElement.innerHTML = "";
+    const emptyContainer = document.getElementById('empty-container');
+    emptyContainer.innerHTML = "";
     if (newData.length === 0){
-        // console.log("ai array te kono upadan nai.");
+        const div = document.createElement('div');
+        div.innerHTML =`
+            <div class="my-5 flex flex-col justify-center items-center gap-5">
+            <img src="./../images/Icon.png" alt="">
+            <p class="text-4xl text-black font-bold text-center">Oops!! Sorry, There is no <br>content here</p>
+            </div>
+        `;
+        emptyContainer.appendChild(div)
     }
 
     data.data.forEach((categoryCard) => {
@@ -39,7 +49,7 @@ const loadData = async(id) => {
                 </div>
                 <div>
                 <h2 class="text-base text-black font-medium">${categoryCard.title}</h2>
-                <div class="flex justify-start gap-3 my-2 text-sm">
+                <div class="flex justify-start gap-2 my-2 text-sm">
                     <h3 class="text-gray-600 ">${categoryCard.authors[0].profile_name}</h3>
                     <p>${categoryCard.authors[0]?.verified? `<img class="w-4" src="./../images/verified.svg">`: ''  }</p>
                 </div>
@@ -54,4 +64,6 @@ const loadData = async(id) => {
     })
 }
 
-loadPage()
+// console.log(loadData(1000));
+loadPage();
+loadData(1000);
