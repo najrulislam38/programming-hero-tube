@@ -1,29 +1,35 @@
+// let currentCategoryId;
+// let globalData ;
 const loadPage = async() => {
     const res = await fetch('https://openapi.programming-hero.com/api/videos/categories');
     const data = await res.json();
 
-    console.log(data.data);
+    // console.log(data.data);
 
     const headerContainer = document.getElementById('tab-container');
     data.data.forEach((category) => {
         const div = document.createElement('div');
         div.innerHTML = `
-            <button onclick="loadData('${category.category_id}')" class="btn text-black bg-gray-300  text-lg font-medium focus:bg-red-500 focus:text-white">${category.category}</a></button>
+            <button onclick="displayData('${category.category_id}')" class="btn text-black bg-gray-300  text-lg font-medium focus:bg-red-500 focus:text-white">${category.category}</a></button>
         `;
         headerContainer.appendChild(div);
     });
+//     currentCategoryId = data.data[0].category_id;
+//     displayData(currentCategoryId);
 };
 
-const loadData = async(id) => {
+const displayData = async(id) => {
     const res = await fetch(`https://openapi.programming-hero.com/api/videos/category/${id}`);
     const data = await res.json();
-    const newData = data.data
+    const newData = data.data;
+    // globalData = newData;
+    // console.log(globalData);
     console.log(data.data);
     const cardContainerElement = document.getElementById('card-container');
     cardContainerElement.innerHTML = "";
     const emptyContainer = document.getElementById('empty-container');
     emptyContainer.innerHTML = "";
-    if (newData.length === 0){
+    if (data.data.length === 0){
         const div = document.createElement('div');
         div.innerHTML =`
             <div class="my-40 flex flex-col justify-center items-center gap-5">
@@ -32,12 +38,10 @@ const loadData = async(id) => {
             </div>
         `;
         emptyContainer.appendChild(div)
-    }
+    };
+    
 
     data.data.forEach((categoryCard) => {
-        // const min = Math.floor(categoryCard.others?.posted_date / 60);
-        // const hrs = Math.floor(min / 60);
-        // const minutes = min -(hrs * 60);
         const div = document.createElement('div');
         div.innerHTML = `
             <div class="card">
@@ -63,10 +67,30 @@ const loadData = async(id) => {
         </div>
         `;
         cardContainerElement.appendChild(div);
-        
-        console.log(`${categoryCard.others.posted_date}`)
     });
 }
+
+// const getId =  async() => {
+//     const res = await fetch('https://openapi.programming-hero.com/api/videos/categories');
+//     const 
+// }
+
+// console.log(globalData);
+// document.getElementById('sort-data').addEventListener('click', function() {
+//     globalData.sort((a, b) => b.others.views - a.others.views);
+//     displayData(globalData); // 
+
+// });
+
+
+// const getSortData = async(id) => {
+//     const res = await fetch(`https://openapi.programming-hero.com/api/videos/category/${id}`);
+//     const data = await res.json();
+//     const newData = data.data
+//     console.log(data.data);
+    
+
+// }
 
 // function convertTime(s){
 //     const hrs = Math.floor(s / 3600);
@@ -80,4 +104,4 @@ const loadData = async(id) => {
 
 // console.log(loadData(1000));
 loadPage();
-loadData(1000);
+displayData(1000);
