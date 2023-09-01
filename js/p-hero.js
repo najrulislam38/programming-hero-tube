@@ -26,7 +26,7 @@ const loadData = async(id) => {
     if (newData.length === 0){
         const div = document.createElement('div');
         div.innerHTML =`
-            <div class="my-5 flex flex-col justify-center items-center gap-5">
+            <div class="my-40 flex flex-col justify-center items-center gap-5">
             <img src="./../images/Icon.png" alt="">
             <p class="text-4xl text-black font-bold text-center">Oops!! Sorry, There is no <br>content here</p>
             </div>
@@ -35,12 +35,15 @@ const loadData = async(id) => {
     }
 
     data.data.forEach((categoryCard) => {
+        // const min = Math.floor(categoryCard.others?.posted_date / 60);
+        // const hrs = Math.floor(min / 60);
+        // const minutes = min -(hrs * 60);
         const div = document.createElement('div');
         div.innerHTML = `
             <div class="card">
             <figure class="w-auto h-[200px] relative">
                 <img src="${categoryCard.thumbnail}" alt="thumbnail" class="w-full h-full rounded-xl" />
-                <p class="absolute right-3 bottom-3 bg-black text-white text-xs px-2 py-1  rounded-lg">23hrs 45min age</p>
+                <p class="absolute right-3 bottom-3 bg-black text-white text-sm px-2 rounded-sm">${categoryCard.others?.posted_date ? Math.floor(`${categoryCard.others.posted_date}` / 3600) + "hrs " + Math.floor(`${categoryCard.others.posted_date}` % 3600 / 60 ) + "min age" : '' }</p>
             </figure>
             <div class="my-3 px-1">
             <div class="my-2 flex justify-start gap-3">
@@ -61,8 +64,19 @@ const loadData = async(id) => {
         `;
         cardContainerElement.appendChild(div);
         
-    })
+        console.log(`${categoryCard.others.posted_date}`)
+    });
 }
+
+// function convertTime(s){
+//     const hrs = Math.floor(s / 3600);
+//     const min = Math.floor(s % 3600 / 60);
+
+//     const getHrs = hrs > 0 ? hrs + (hrs == 1 ? " hr" : " hrs ") : "";
+//     const getMin = min > 0 ? min + (min == 1 ? "min":"mins" ) : "";
+//     return getHrs, getMin;
+
+// }
 
 // console.log(loadData(1000));
 loadPage();
