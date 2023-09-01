@@ -1,5 +1,4 @@
-// let currentCategoryId;
-// let globalData ;
+let globalData ;
 const loadPage = async() => {
     const res = await fetch('https://openapi.programming-hero.com/api/videos/categories');
     const data = await res.json();
@@ -10,26 +9,29 @@ const loadPage = async() => {
     data.data.forEach((category) => {
         const div = document.createElement('div');
         div.innerHTML = `
-            <button onclick="displayData('${category.category_id}')" class="btn text-black bg-gray-300  text-lg font-medium focus:bg-red-500 focus:text-white">${category.category}</a></button>
+            <button onclick="loadData('${category.category_id}')" class="btn text-black bg-gray-300  text-lg font-medium focus:bg-red-500 focus:text-white">${category.category}</a></button>
         `;
         headerContainer.appendChild(div);
     });
-//     currentCategoryId = data.data[0].category_id;
-//     displayData(currentCategoryId);
 };
 
-const displayData = async(id) => {
-    const res = await fetch(`https://openapi.programming-hero.com/api/videos/category/${id}`);
+const loadData = async(categoryId) => {
+    const res = await fetch(`https://openapi.programming-hero.com/api/videos/category/${categoryId}`);
     const data = await res.json();
     const newData = data.data;
-    // globalData = newData;
-    // console.log(globalData);
+    globalData = newData;
+    console.log(globalData);
     console.log(data.data);
+    displayData(newData)
+}
+
+const displayData = (cardsId) => {
+    // console.log(cardsId);
     const cardContainerElement = document.getElementById('card-container');
     cardContainerElement.innerHTML = "";
     const emptyContainer = document.getElementById('empty-container');
     emptyContainer.innerHTML = "";
-    if (data.data.length === 0){
+    if (cardsId.length === 0){
         const div = document.createElement('div');
         div.innerHTML =`
             <div class="my-40 flex flex-col justify-center items-center gap-5">
@@ -41,7 +43,7 @@ const displayData = async(id) => {
     };
     
 
-    data.data.forEach((categoryCard) => {
+    cardsId.forEach((categoryCard) => {
         const div = document.createElement('div');
         div.innerHTML = `
             <div class="card">
@@ -70,38 +72,14 @@ const displayData = async(id) => {
     });
 }
 
-// const getId =  async() => {
-//     const res = await fetch('https://openapi.programming-hero.com/api/videos/categories');
-//     const 
-// }
 
-// console.log(globalData);
-// document.getElementById('sort-data').addEventListener('click', function() {
-//     globalData.sort((a, b) => b.others.views - a.others.views);
-//     displayData(globalData); // 
+document.getElementById('sort-data').addEventListener('click', function(){
 
-// });
+     globalData.sort((a,b) => parseInt(b.others.views) - parseInt(a.others.views))
+     displayData(globalData);
+});
 
-
-// const getSortData = async(id) => {
-//     const res = await fetch(`https://openapi.programming-hero.com/api/videos/category/${id}`);
-//     const data = await res.json();
-//     const newData = data.data
-//     console.log(data.data);
-    
-
-// }
-
-// function convertTime(s){
-//     const hrs = Math.floor(s / 3600);
-//     const min = Math.floor(s % 3600 / 60);
-
-//     const getHrs = hrs > 0 ? hrs + (hrs == 1 ? " hr" : " hrs ") : "";
-//     const getMin = min > 0 ? min + (min == 1 ? "min":"mins" ) : "";
-//     return getHrs, getMin;
-
-// }
 
 // console.log(loadData(1000));
 loadPage();
-displayData(1000);
+loadData(1000);
