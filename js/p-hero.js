@@ -58,7 +58,7 @@ const displayData = (cardsId) => {
                 </div>
                 <div>
                 <h2 class="text-base text-black font-medium">${categoryCard.title}</h2>
-                <div class="flex justify-start gap-2 my-2 text-sm">
+                <div class="flex justify-start gap-2 mb-2 text-sm">
                     <h3 class="text-gray-600 ">${categoryCard.authors[0].profile_name}</h3>
                     <p>${categoryCard.authors[0]?.verified? `<img class="w-4" src="./../images/verified.svg">`: ''  }</p>
                 </div>
